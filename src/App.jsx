@@ -47,6 +47,7 @@ console.log(todos)
   </form>
   <h1 className="header">Todo List</h1>
   <ul className="list">
+    {todos.length == 0 && "No todos"}
     {todos.map(todo => {
       return (
       <li key={todo.id}>
