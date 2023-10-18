@@ -1,13 +1,22 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { NewTodoForm } from "./NewTodoForm"
 import { TodoList } from "./TodoList"
 
 export default function App(){
   //whatever is in the () of useState will be initialized to newItem
   //setNewItem is going to update newItem acting like a "setter" in OOP 
-  const [newItem, setNewItem] = useState("")
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState(()=>{
+    const localValue = localStorage.getItem("ITEMS")
+    if (localValue == null) return []
+    return JSON.parse(localValue)
+  }
+  )
+
+  useEffect(()=>{
+    localStorage.setItem("ITEMS", JSON.stringify(todos))
+  }, [todos])
   
+
   function addTodo(title){
     setTodos(currentTodos => {
       return [...currentTodos,
